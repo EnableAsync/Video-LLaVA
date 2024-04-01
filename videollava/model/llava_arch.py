@@ -139,10 +139,19 @@ class LlavaMetaForCausalLM(ABC):
         image_features = self.get_model().mm_projector(image_features)
         return image_features
 
+    # def encode_videos(self, videos):  # [mini_b, c, t, h, w]
+    #     b, _, t, _, _ = videos.shape
+    #     video_features = self.get_model().get_video_tower()(videos)  # [mini_b, t, n, c]
+    #     video_features = self.get_model().mm_projector(video_features)
+    #     return video_features
+
     def encode_videos(self, videos):  # [mini_b, c, t, h, w]
         b, _, t, _, _ = videos.shape
         video_features = self.get_model().get_video_tower()(videos)  # [mini_b, t, n, c]
+        b, t, n, c = video_features.shape
+        video_features = video_features.reshape([b, t*n, c])
         video_features = self.get_model().mm_projector(video_features)
+        video_features = video_features.reshape([b, t, n, -1]) 
         return video_features
 
     def prepare_inputs_labels_for_multimodal(
