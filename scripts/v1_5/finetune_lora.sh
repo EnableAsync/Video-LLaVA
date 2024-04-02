@@ -3,7 +3,7 @@
 JSON_FOLDER="llava_all_image_video/ft_json"
 IMAGE_FOLDER="llava_all_image_video"
 VIDEO_FOLDER="llava_all_image_video"
-cd /path/to/Video-LLaVA
+cd /home/kdzlys/data-disk/sjj/Video-LLaVA
 
 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1 deepspeed videollava/train/train_mem.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
