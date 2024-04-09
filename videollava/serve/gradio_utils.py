@@ -52,6 +52,8 @@ class Chat:
     def __init__(self, model_path, conv_mode, model_base=None, load_8bit=False, load_4bit=False, device='cuda', cache_dir=None):
         disable_torch_init()
         model_name = get_model_name_from_path(model_path)
+        if 'lora' in model_path:
+            model_base = './cache_dir/models--LanguageBind--Video-LLaVA-7B/snapshots/b1d6a63f98cc93153d3e9ff295bd6dee5ffafe4c'
         self.tokenizer, self.model, processor, context_len = load_pretrained_model(model_path, model_base, model_name,
                                                                                    load_8bit, load_4bit,
                                                                                    device=device, cache_dir=cache_dir)
