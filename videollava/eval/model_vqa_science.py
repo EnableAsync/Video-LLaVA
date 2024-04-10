@@ -52,7 +52,7 @@ def eval_model(args):
         if 'image' in line:
             image_file = line["image"]
             image = Image.open(os.path.join(args.image_folder, image_file))
-            image_tensor = image_processor.(image, return_tensors='pt')['pixel_values'][0]
+            image_tensor = image_processor.preprocess(image, return_tensors='pt')['pixel_values'][0]
             images = image_tensor.unsqueeze(0).half().cuda()
             if getattr(model.config, 'mm_use_im_start_end', False):
                 qs = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN + DEFAULT_IM_END_TOKEN + '\n' + qs
